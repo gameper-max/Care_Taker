@@ -1,0 +1,61 @@
+#include <Adafruit_LiquidCrystal.h>
+int s = 0;
+int m= 13;
+int e =8;
+int t =7;
+float d =0;
+int b1 = 11;
+
+Adafruit_LiquidCrystal lcd_1(0);
+
+void setup()
+{
+  pinMode(A1, INPUT);
+  Serial.begin(9600);
+  pinMode(m, OUTPUT);
+  lcd_1.begin(16, 2);
+  pinMode(e,INPUT);
+  pinMode(t,OUTPUT);
+  pinMode(b1,INPUT);
+}
+
+  
+
+void loop()
+{
+  s = analogRead(A1);
+  int value =digitalRead(b1);
+delayMicroseconds(2);
+digitalWrite(t,HIGH);
+delayMicroseconds(10);
+digitalWrite(t,LOW);
+d = pulseIn(e,HIGH);
+d = d/58;
+Serial.print("distance in cm : ");
+Serial.println(d);
+  if (s <400)
+  {
+    digitalWrite(m, HIGH);
+  }
+    else
+    {
+      digitalWrite(m,LOW);
+  }
+  if (value==1)
+  {
+    
+     lcd_1.setCursor(0, 0);
+  lcd_1.print("moisture of soil");
+  lcd_1.setCursor(0,1);            
+  lcd_1.print(s);
+  }
+ 
+ else
+ {
+   lcd_1.setCursor(0,0);
+   lcd_1.print("distance of plant");
+     lcd_1.setCursor(0,1);
+   lcd_1.print(d);
+ }
+ 
+}
